@@ -2,11 +2,14 @@ package com.voteroid.userService.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.voteroid.userService.dtos.Constants;
+import com.voteroid.userService.dtos.LicenseDataDTO;
 import com.voteroid.userService.dtos.Reply;
 import com.voteroid.userService.dtos.Response;
 import com.voteroid.userService.exceptions.InvalidToken;
@@ -37,6 +40,13 @@ public class HomeController {
 			response.setMessage("Valid Domain Name !!!");
 		}
 		reply.setData(response);
+		return reply;
+	}
+	
+	@PostMapping("/user/generateLicenseKey")
+	public Reply generateLicenseKeyFromGateway(@RequestHeader(Constants.TOKEN_DATA) String data,@RequestBody LicenseDataDTO licenseDataDTO) {
+		Reply reply = new Reply(data);
+		reply.setData(sagProxy.generateLicenseKeyFromGateway("hwhps1427k",licenseDataDTO));
 		return reply;
 	}
 	

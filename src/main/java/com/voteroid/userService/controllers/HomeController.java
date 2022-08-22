@@ -13,6 +13,7 @@ import com.voteroid.userService.dtos.LicenseDataDTO;
 import com.voteroid.userService.dtos.Reply;
 import com.voteroid.userService.dtos.Response;
 import com.voteroid.userService.exceptions.InvalidToken;
+import com.voteroid.userService.exceptions.NoUserInformationRecieved;
 import com.voteroid.userService.repositories.ClientProxy;
 import com.voteroid.userService.repositories.SAGProxy;
 
@@ -56,6 +57,16 @@ public class HomeController {
 		if(reply.getAttribute(Constants.CLIENT_ID)==null)
 			throw new InvalidToken();
 		Response response = sagProxy.fetchAvailableApiListforUsersFromClientId("hwhps1427k",(int) reply.getAttribute(Constants.CLIENT_ID));
+		reply.setData(response);
+		return reply;
+	}
+	
+	@GetMapping("/sag/fetchTokens/user")
+	public Reply fetchTokensForClientId(@RequestHeader(Constants.TOKEN_DATA) String data) {
+		Reply reply = new Reply(data);
+		if(reply.getAttribute(Constants.USER_ID)==null)
+			throw new NoUserInformationRecieved();
+		Response response = sagProxy.fetchTokensForUserId("hwhps1427k",(int)reply.getAttribute(Constants.USER_ID));
 		reply.setData(response);
 		return reply;
 	}

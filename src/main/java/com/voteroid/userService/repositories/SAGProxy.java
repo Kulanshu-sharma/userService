@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.voteroid.userService.dtos.LicenseDataDTO;
 import com.voteroid.userService.dtos.Response;
@@ -18,4 +19,7 @@ public interface SAGProxy {
 
 	@PostMapping("/sag/generateLicenseKey")
 	public Response generateLicenseKeyFromGateway(@RequestHeader("accessKey") String accessKey,@RequestBody LicenseDataDTO licenseDataDTO);
+	
+	@GetMapping("/sag/fetchTokens/user")
+	public Response fetchTokensForUserId(@RequestHeader("accessKey") String accessKey,@RequestParam int userId);
 }

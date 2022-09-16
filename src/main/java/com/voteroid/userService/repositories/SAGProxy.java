@@ -21,5 +21,5 @@ public interface SAGProxy {
 	public Response generateLicenseKeyFromGateway(@RequestHeader("accessKey") String accessKey,@RequestBody LicenseDataDTO licenseDataDTO);
 	
 	@GetMapping("/sag/fetchTokens/user")
-	public Response fetchTokensForUserId(@RequestHeader("accessKey") String accessKey,@RequestParam int userId);
+	public Response fetchTokensForUserId(@RequestHeader("accessKey") String accessKey,@RequestParam("userId") int userId);
 }
